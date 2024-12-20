@@ -46,9 +46,15 @@ app.get('/contact', (req, res) => {
     });
   });
 router.post("/contact", (req, res) => {
+    console.log("Contact endpoint hit");
   const name = req.body.fullName ;
   const email = req.body.email;
   const message = req.body.message;
+  console.log("Request body:", req.body); // Log the incoming request body
+  if (!name || !email || !message) {
+    console.error("Validation error: Missing fields"); // Log validation errors
+    return res.status(400).json({ error: "All fields are required." });
+  }
   const mail = {
     from: name,
     to: process.env.EMAIL_USER,
