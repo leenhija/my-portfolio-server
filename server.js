@@ -37,7 +37,12 @@ contactEmail.verify((error) => {
     console.log("Ready to Send");
   }
 });
-
+app.get('/contact', (req, res) => {
+    res.json({
+      message: 'This is the contact route. Use POST /contact to send messages.',
+      instructions: 'Send a POST request with name, email, and message in the body.',
+    });
+  });
 router.post("/contact", (req, res) => {
   const name = req.body.fullName ;
   const email = req.body.email;
