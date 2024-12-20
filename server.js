@@ -29,6 +29,8 @@ const contactEmail = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS
   },
 });
+console.log("Email User:", process.env.EMAIL_USER);
+console.log("Email Pass:", process.env.EMAIL_PASS);
 
 contactEmail.verify((error) => {
   if (error) {
@@ -57,7 +59,9 @@ router.post("/contact", (req, res) => {
   };
   contactEmail.sendMail(mail, (error) => {
     if (error) {
-      res.json(error);
+    //   res.json(error);
+      console.error("Error sending email:", error);
+      return res.status(500).json({ error: "Failed to send email. Please try again later." });
     } else {
       res.json({ code: 200, status: "Message Sent" });
     }
